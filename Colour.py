@@ -24,3 +24,4 @@ class Colour(object):
 
 	def calc_distance(self, cmp_colour):
 		return (self.red-cmp_colour.red)**2 + (self.green-cmp_colour.green)**2 +(self.blue-cmp_colour.blue)**2
+
