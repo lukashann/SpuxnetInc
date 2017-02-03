@@ -1,6 +1,6 @@
 class Color(object):
 
-    def __int__(self,red, green, blue, clear):
+    def __init__(self, red, green, blue, clear):
         self.red = red
         self.green = green
         self.blue = blue
