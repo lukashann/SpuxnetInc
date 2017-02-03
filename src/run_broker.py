@@ -1,8 +1,10 @@
 from WifiBroker import WifiBroker
 
-wifiBroker = WifiBroker()
-wifiBroker.connect_to_broker()
-msg = 'Stuxnet > world'
-wifiBroker.pub_message(msg)
-wifiBroker.disconnect()
+def run_broker()
+    wifiBroker = WifiBroker()
+    wifiBroker.connect_to_broker()
+    msg = 'Stuxnet > world'
+    wifiBroker.publish_msg(msg)
+    wifiBroker.disconnect()
 
+run_broker()

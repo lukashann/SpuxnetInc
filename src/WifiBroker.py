@@ -27,7 +27,7 @@ class WifiBroker(object):
         self.client.connect()
         print('Connected')
 
-    def pub_message(self, msg):
+    def publish_msg(self, msg):
         print(msg)
         self.client.publish(self.TOPIC, bytes(msg, 'utf-8'))
 
