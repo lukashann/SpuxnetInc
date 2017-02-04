@@ -19,6 +19,7 @@ class WifiBroker(object):
     def connect_to_broker(self):
         self.ap_if.active(False)
         self.sta_if.active(True)
+        print('test')
 
         while not self.sta_if.isconnected():
             self.sta_if.connect(self.essid, self.pw)
