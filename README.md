@@ -1,3 +1,0 @@
-# SpuxnetInc
-
-Hello
