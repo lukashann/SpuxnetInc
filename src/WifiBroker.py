@@ -5,6 +5,7 @@ from umqtt.simple import MQTTClient
 
 
 class WifiBroker(object):
+    '''Class for connecting the device to the broker.'''
 
     def __init__(self):
         self.BROKER_ADDRESS = '192.168.0.10'
@@ -17,9 +18,11 @@ class WifiBroker(object):
         self.sta_if = network.WLAN(network.STA_IF)
 
     def connect_to_broker(self):
+        '''Connect to the broker.'''
         self.ap_if.active(False)
         self.sta_if.active(True)
 
+        #Tries to connect until successful
         while not self.sta_if.isconnected():
             self.sta_if.connect(self.essid, self.pw)
             time.sleep(5)
@@ -28,10 +31,12 @@ class WifiBroker(object):
         print('Connected')
 
     def publish_msg(self, msg):
+        '''Sends the msg to the broker.'''
         print(msg)
         self.client.publish(self.TOPIC, bytes(msg, 'utf-8'))
 
     def disconnect(self):
+        '''Disconnects the device form the borker.'''
         print('Disconnect')
         self.client.disconnect()
         self.sta_if.disconnect()
