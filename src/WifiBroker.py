@@ -21,7 +21,6 @@ class WifiBroker(object):
         '''Connect to the broker.'''
         self.ap_if.active(False)
         self.sta_if.active(True)
-        print('test')
 
         #Tries to connect until successful
         while not self.sta_if.isconnected():

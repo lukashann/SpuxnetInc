@@ -1,7 +1,7 @@
 import time
+import machine
 import tcs34725
 import Colour
-import machine
 from closestColour import closestColour
 from WifiBroker import WifiBroker
 
@@ -16,36 +16,31 @@ def main():
 	sensorLED = machine.Pin(15, machine.Pin.OUT)
 	# set the sensor LED to low to turn off the LED
 	sensorLED.low()
+	# set up pin 12 as an input 
+	button = machine.Pin(12, machine.Pin.IN, machine.Pin.PULL_UP)
 
 	# set up the wifiBroker and connect to the broker
 	wifiBroker = WifiBroker()
 	wifiBroker.connect_to_broker()
 
-	for i in range(0, 10):
-		RedList = []
-		GreenList = []
-		BlueList = []
+	while True:
+		if not button.value():
+			RedList = []
+			GreenList = []
+			BlueList = []
 
-		sensorLED.high()
-		time.sleep(0.9)
+			sensorLED.high()
+			time.sleep(0.9)
 
-		for j in range(0, 20):
 			(red, green, blue, clear) = sensor.read(True)
+
+			time.sleep(0.1)
 			sensorLED.low()
-			RedList.append(red)
-			BlueList.append(blue)
-			GreenList.append(green)
 
-		time.sleep(0.1)
-
-		averageRed = sum(RedList)/float(len(RedList))
-		averageGreen = sum(GreenList)/float(len(GreenList))
-		averageBlue = sum(BlueList)/float(len(BlueList))
-
-		readColour = Colour.Colour('unknown', averageRed, averageGreen, averageBlue)
-		match = closestColour(readColour)
-		wifiBroker.publish_msg(match)
-
+			readColour = Colour.Colour('unknown', red, green, blue)
+			match = closestColour(readColour)
+			msg = str('red: ' + str(red) + ', green: ' + str(green) + ', blue: ' + str(blue) + ', name: ' + match)
+			wifiBroker.publish_msg(msg)
 
 	wifiBroker.disconnect()
 
