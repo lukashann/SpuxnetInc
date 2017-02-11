@@ -1,4 +1,5 @@
 import time
+import json
 import machine
 import tcs34725
 import Colour
@@ -40,6 +41,7 @@ def main():
 			readColour = Colour.Colour('unknown', red, green, blue)
 			match = closestColour(readColour)
 			msg = str('red: ' + str(red) + ', green: ' + str(green) + ', blue: ' + str(blue) + ', name: ' + match)
+			msg = json.dumps({'name':match, 'red':red, 'green':green, 'blue':blue})
 			wifiBroker.publish_msg(msg)
 
 	wifiBroker.disconnect()
