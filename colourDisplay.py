@@ -38,31 +38,34 @@ def on_message(client, userdata, message):
 	data = json.loads(str(message.payload.decode("utf-8")))
 	update_widget(data['name'], data['red'], data['green'], data['blue'])
 
-broker = MQTT_Broker(w)
-broker.connect_to_broker()
-broker.subscribe()
-broker.on_message(on_message)
 
 
-root = tkinter.Tk()
+def run():
+	root = tkinter.Tk()
 
-init_ct_hex = '%02x%02x%02x' % (0, 0, 0)
-init_bg_colour = '#' + ''.join(init_ct_hex)
+	init_ct_hex = '%02x%02x%02x' % (0, 0, 0)
+	init_bg_colour = '#' + ''.join(init_ct_hex)
 
-w = tkinter.Label(root, text='Press Button to identify Colour', bg=init_bg_colour, fg='white', font=('Helvetica', 30))
-w.pack(padx=50, pady=100, side=tkinter.LEFT)
+	w = tkinter.Label(root, text='Press Button to identify Colour', bg=init_bg_colour, fg='white', font=('Helvetica', 30))
+	w.pack(padx=50, pady=100, side=tkinter.LEFT)
+
+	broker = MQTT_Broker(w)
+	broker.connect_to_broker()
+	broker.subscribe()
+	broker.on_message(on_message)
 
 
-global widget_colour
-global widget_text
+	global widget_colour
+	global widget_text
 
-widget_colour = init_bg_colour
-widget_text = 'Press Button to identify Colour'
+	widget_colour = init_bg_colour
+	widget_text = 'Press Button to identify Colour'
 
-while True:
-	w.configure(bg=widget_colour)
-	w.configure(text=widget_text)
-	w.update_idletasks()
-	w.update()
-	time.sleep(1)
+	while True:
+		w.configure(bg=widget_colour)
+		w.configure(text=widget_text)
+		w.update_idletasks()
+		w.update()
+		time.sleep(1)
 
+run()
